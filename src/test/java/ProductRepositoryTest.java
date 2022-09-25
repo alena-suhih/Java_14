@@ -21,7 +21,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void deleteProduct() {
+    public void CorrectDeleteProduct() {
         ProductRepository repo = new ProductRepository();
 
         repo.save(book1);
@@ -33,5 +33,19 @@ public class ProductRepositoryTest {
         Product[] actual = repo.findAll();
 
         Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void IncorrectDeleteProduct() {
+        ProductRepository repo = new ProductRepository();
+
+        repo.save(book1);
+        repo.save(book2);
+        repo.save(smartphone1);
+
+        Assertions.assertThrows(NotFoundException.class,
+                () -> {
+                    repo.removeById(4);
+                });
     }
 }
